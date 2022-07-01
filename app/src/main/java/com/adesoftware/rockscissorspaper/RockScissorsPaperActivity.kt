@@ -1,58 +1,56 @@
 package com.adesoftware.rockscissorspaper
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import kotlin.random.Random
+import com.adesoftware.rockscissorspaper.databinding.ActivityRockScissorsPaperBinding
 
-class RockScissorsPaperActivity : AppCompatActivity() {
+class RockScissorsPaperActivity : Activity() {
 
-    lateinit var bRock: Button
-    lateinit var bScissors: Button
-    lateinit var bPaper: Button
-    lateinit var tvScore: TextView
-    lateinit var tvHumanChoice: TextView
-    lateinit var tvComputerChoice: TextView
-    lateinit var ivComputerChoice: ImageView
-    lateinit var ivHumanChoice: ImageView
-    lateinit var random: Random
+    private lateinit var binding: ActivityRockScissorsPaperBinding
+
+    private lateinit var tvScore: TextView
+    private lateinit var tvHumanChoice: TextView
+    private lateinit var tvComputerChoice: TextView
+    private lateinit var ivComputerChoice: ImageView
+    private lateinit var ivHumanChoice: ImageView
+    private lateinit var random: Random
     private var humanScore: Int = 0
     private var computerScore: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_rock_scissors_paper)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_rock_scissors_paper)
 
         //assign variables
-        bRock = findViewById(R.id.btn_rock)
-        bScissors = findViewById(R.id.btn_scissors)
-        bPaper = findViewById(R.id.btn_paper)
         tvScore = findViewById(R.id.tv_score)
         tvHumanChoice = findViewById(R.id.tv_humanChoice)
         tvComputerChoice = findViewById(R.id.tv_computerChoice)
         ivComputerChoice = findViewById(R.id.iv_computerChoice)
         ivHumanChoice = findViewById(R.id.iv_humanChoice)
 
-        bRock.setOnClickListener {
+
+        binding.btnRock.setOnClickListener {
             ivHumanChoice.setImageResource(R.drawable.rockrot)
             val message: String = playTurn("rock")
             Toast.makeText(this, "" + message, Toast.LENGTH_LONG).show()
             tvScore.text = getString(R.string.human_score) + Integer.toString(humanScore) +
                     " Computer: " + Integer.toString(computerScore)
         }
-        bScissors.setOnClickListener {
+
+        binding.btnScissors.setOnClickListener {
             ivHumanChoice.setImageResource(R.drawable.scissorsrot)
             val message: String = playTurn("scissors")
             Toast.makeText(this, "" + message, Toast.LENGTH_LONG).show()
             tvScore.text = getString(R.string.human_score) + Integer.toString(humanScore) +
                     " Computer: " + Integer.toString(computerScore)
         }
-        bPaper.setOnClickListener {
+        binding.btnPaper.setOnClickListener {
             ivHumanChoice.setImageResource(R.drawable.paperrot)
             val message: String = playTurn("paper")
             Toast.makeText(this, "" + message, Toast.LENGTH_LONG).show()
@@ -65,7 +63,7 @@ class RockScissorsPaperActivity : AppCompatActivity() {
         var computerChoice = ""
         random = Random(10)
         //choice 1, 2 or 3
-        var computerChoiceNumber = random.nextInt(3) + 1
+        val computerChoiceNumber = random.nextInt(3) + 1
 
         if (computerChoiceNumber == 1) {
             computerChoice = "rock"
