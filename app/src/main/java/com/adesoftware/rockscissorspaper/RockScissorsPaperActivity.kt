@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import kotlin.random.Random
 import com.adesoftware.rockscissorspaper.databinding.ActivityRockScissorsPaperBinding
 
@@ -13,11 +12,6 @@ class RockScissorsPaperActivity : Activity() {
 
     private lateinit var binding: ActivityRockScissorsPaperBinding
 
-    private lateinit var tvScore: TextView
-    private lateinit var tvHumanChoice: TextView
-    private lateinit var tvComputerChoice: TextView
-    private lateinit var ivComputerChoice: ImageView
-    private lateinit var ivHumanChoice: ImageView
     private lateinit var random: Random
     private var humanScore: Int = 0
     private var computerScore: Int = 0
@@ -25,36 +19,40 @@ class RockScissorsPaperActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_rock_scissors_paper)
+        binding = ActivityRockScissorsPaperBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //assign variables
-        tvScore = findViewById(R.id.tv_score)
-        tvHumanChoice = findViewById(R.id.tv_humanChoice)
-        tvComputerChoice = findViewById(R.id.tv_computerChoice)
-        ivComputerChoice = findViewById(R.id.iv_computerChoice)
-        ivHumanChoice = findViewById(R.id.iv_humanChoice)
+        binding.apply {
+            tvScore
+            tvHumanChoice
+            tvComputerChoice
+            ivComputerChoice
+            ivHumanChoice
+        }
+
 
 
         binding.btnRock.setOnClickListener {
-            ivHumanChoice.setImageResource(R.drawable.rockrot)
+            binding.ivHumanChoice.setImageResource(R.drawable.rockrot)
             val message: String = playTurn("rock")
             Toast.makeText(this, "" + message, Toast.LENGTH_LONG).show()
-            tvScore.text = getString(R.string.human_score) + Integer.toString(humanScore) +
+            binding.tvScore.text = getString(R.string.human_score) + Integer.toString(humanScore) +
                     " Computer: " + Integer.toString(computerScore)
         }
 
         binding.btnScissors.setOnClickListener {
-            ivHumanChoice.setImageResource(R.drawable.scissorsrot)
+            binding.ivHumanChoice.setImageResource(R.drawable.scissorsrot)
             val message: String = playTurn("scissors")
             Toast.makeText(this, "" + message, Toast.LENGTH_LONG).show()
-            tvScore.text = getString(R.string.human_score) + Integer.toString(humanScore) +
+            binding.tvScore.text = getString(R.string.human_score) + Integer.toString(humanScore) +
                     " Computer: " + Integer.toString(computerScore)
         }
         binding.btnPaper.setOnClickListener {
-            ivHumanChoice.setImageResource(R.drawable.paperrot)
+            binding.ivHumanChoice.setImageResource(R.drawable.paperrot)
             val message: String = playTurn("paper")
             Toast.makeText(this, "" + message, Toast.LENGTH_LONG).show()
-            tvScore.text = getString(R.string.human_score) + Integer.toString(humanScore) +
+            binding.tvScore.text = getString(R.string.human_score) + Integer.toString(humanScore) +
                     " Computer: " + Integer.toString(computerScore)
         }
     }
@@ -75,11 +73,11 @@ class RockScissorsPaperActivity : Activity() {
 
         //Set the computer image based on computer's choice
         if (computerChoice == "rock") {
-            ivComputerChoice.setImageResource(R.drawable.rockrot)
+            binding.ivComputerChoice.setImageResource(R.drawable.rockrot)
         } else if (computerChoice == "scissors") {
-            ivComputerChoice.setImageResource(R.drawable.scissorsrot)
+            binding.ivComputerChoice.setImageResource(R.drawable.scissorsrot)
         } else if (computerChoice == "paper") {
-            ivComputerChoice.setImageResource(R.drawable.paperrot)
+            binding.ivComputerChoice.setImageResource(R.drawable.paperrot)
         }
 
         //Human and computer choice compare to determine who won
