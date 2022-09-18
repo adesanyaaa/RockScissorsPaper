@@ -31,8 +31,6 @@ class RockScissorsPaperActivity : Activity() {
             ivHumanChoice
         }
 
-
-
         binding.btnRock.setOnClickListener {
             binding.ivHumanChoice.setImageResource(R.drawable.rockrot)
             val message: String = playTurn("rock")
